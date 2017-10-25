@@ -22,9 +22,15 @@ public class AccountController {
         accounts.add(new Account("test", "test", "test@test.fr"));
     }
 
-    private String getResponse(String msg) {
+    private String myResponse(String msg) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("msg", msg);
+        return jsonObject.toString();
+    }
+
+    private String myError(String msg) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("error", msg);
         return jsonObject.toString();
     }
 
@@ -37,14 +43,14 @@ public class AccountController {
     public String postAccount(@RequestBody Account account) {
         for (Account currentAccount : accounts) {
             if (currentAccount.getUsername().equals(account.getUsername())) {
-                return getResponse("username already taken");
+                return myError("username already taken");
             }
             if (currentAccount.getEmail().equals(account.getEmail())) {
-                return getResponse("email already taken");
+                return myError("email already taken");
             }
         }
         accounts.add(account);
-        return getResponse("post " + account.getUsername());
+        return myResponse("post " + account.getUsername());
     }
 
     @PutMapping("/{username}")
@@ -52,10 +58,10 @@ public class AccountController {
         for (int i = 0; i < accounts.size(); i++) {
             if (accounts.get(i).getUsername().equals(username)) {
                 accounts.set(i, account);
-                return getResponse("put " + username);
+                return myResponse("put " + username);
             }
         }
-        return getResponse("username not found");
+        return myError("username not found");
     }
 
     @DeleteMapping("/{username}")
@@ -63,15 +69,15 @@ public class AccountController {
         for (int i = 0; i < accounts.size(); i++) {
             if (accounts.get(i).getUsername().equals(username)) {
                 accounts.remove(i);
-                return getResponse("delete " + username);
+                return myResponse("delete " + username);
             }
         }
-        return getResponse("username not found");
+        return myError("username not found");
     }
 
     @DeleteMapping
     public String deleteAllAccounts() {
         accounts.clear();
-        return getResponse("delete all");
+        return myResponse("delete all");
     }
 }
