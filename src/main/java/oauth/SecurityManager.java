@@ -25,18 +25,20 @@ public class SecurityManager implements HandlerInterceptor, OauthPath {
         for (; headerName.hasMoreElements(); ) {
             String header = (String) headerName.nextElement();
             System.err.println(header + " : " + request.getHeader(header));
-        }
-        String base64Tmp = request.getHeader("authorization").split(" ")[1];
-        String[] base64DecodeTmp = new String(Base64.getDecoder().decode(base64Tmp)).split(":");
-        String username = base64DecodeTmp[0];
-        String password = base64DecodeTmp[1];
-        System.err.println(username);
-        System.err.println(password);
-        List<Account> accounts = AccountSingleton.getInstance().getAccounts();
-        for (Account account : accounts) {
-            if (account.getUsername().equals(username)
-                    && account.getPassword().equals(password)) {
-                return true;
+            if (header.equals("authorization")) {
+                String base64Tmp = request.getHeader("authorization").split(" ")[1];
+                String[] base64DecodeTmp = new String(Base64.getDecoder().decode(base64Tmp)).split(":");
+                String username = base64DecodeTmp[0];
+                String password = base64DecodeTmp[1];
+                System.err.println(username);
+                System.err.println(password);
+                List<Account> accounts = AccountSingleton.getInstance().getAccounts();
+                for (Account account : accounts) {
+                    if (account.getUsername().equals(username)
+                            && account.getPassword().equals(password)) {
+                        return true;
+                    }
+                }
             }
         }
         response.setStatus(HttpStatus.UNAUTHORIZED.value());

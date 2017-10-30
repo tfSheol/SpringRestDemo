@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 class Account {
   email: String;
@@ -27,7 +27,11 @@ export class AppComponent implements OnInit {
 
   getAllUser(): void {
     this.error = "";
-    this.http.get<Account[]>("http://localhost:8080/account").subscribe(bla => {
+    const headers = new HttpHeaders()
+      .set('Authorization', 'Basic ' + btoa("test:test"));
+    this.http.get<Account[]>("http://localhost:8080/account", {
+      headers: headers
+    }).subscribe(bla => {
       this.users = bla;
     })
   }
