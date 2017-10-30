@@ -4,8 +4,8 @@ import com.google.gson.Gson;
 import entity.Account;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
+import tmp.AccountSingleton;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/account")
 public class AccountController {
-    private List<Account> accounts = new ArrayList<Account>();
+    private List<Account> accounts = AccountSingleton.getInstance().getAccounts();
 
     public AccountController() {
         /* simulate accounts */
