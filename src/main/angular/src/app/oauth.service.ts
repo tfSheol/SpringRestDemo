@@ -38,11 +38,9 @@ export class OauthService {
   }
 
   public setToken(token: Token): void {
+    this.token = new Token();
     this.token = token;
-    this.token.connected = true;
     this.initHeader();
-    console.log(this.token);
-    console.log(this.headers);
   }
 
   public logout() {

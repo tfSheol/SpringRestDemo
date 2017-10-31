@@ -37,6 +37,7 @@ export class AppComponent implements OnInit {
 
   login(user: Account): void {
     this.oauth.login(user.username, user.password).subscribe(bla => {
+      bla.connected = true;
       this.oauth.setToken(bla);
       this.getAllUser();
     }, error => this.oauth.error(error));
