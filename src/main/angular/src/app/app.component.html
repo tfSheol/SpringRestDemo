@@ -28,5 +28,14 @@
       <button type="submit">Submit</button>
     </form>
   </div>
+  <br/><br/>
+  <div>
+    <form *ngIf="!oauth.isConnected()" #data_login="ngForm" (ngSubmit)="login(data_login.value)">
+      <input type="text" placeholder="username" name="username" ngModel>
+      <input type="password" placeholder="password" name="password" ngModel>
+      <button type="submit">Login</button>
+    </form>
+    <button *ngIf="oauth.isConnected()" (click)="oauth.logout()">Logout : {{oauth.getUsername()}}</button>
+  </div>
 </div>
 

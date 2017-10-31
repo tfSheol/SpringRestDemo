@@ -18,8 +18,6 @@ public class AccountController {
     private List<Account> accounts = AccountSingleton.getInstance().getAccounts();
 
     public AccountController() {
-        /* simulate accounts */
-        accounts.add(new Account("test", "test", "test@test.fr"));
     }
 
     private String myResponse(String msg) {

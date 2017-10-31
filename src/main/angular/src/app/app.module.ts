@@ -1,9 +1,10 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
-import { FormsModule }   from '@angular/forms';
+import {FormsModule} from '@angular/forms';
 
-import { AppComponent } from './app.component';
+import {AppComponent} from './app.component';
+import {OauthService} from "./oauth.service";
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { AppComponent } from './app.component';
     HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [OauthService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

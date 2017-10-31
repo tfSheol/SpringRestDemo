@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {OauthService} from "./oauth.service";
 
 class Account {
   email: String;
@@ -18,28 +19,39 @@ export class AppComponent implements OnInit {
   public users: Account[] = [];
   public error: String = "";
 
-  constructor(private http: HttpClient) {
+
+  constructor(private http: HttpClient, public oauth: OauthService) {
   }
 
   ngOnInit(): void {
     this.getAllUser();
   }
 
+  /*
+    let body = new URLSearchParams();
+    body.set('username', username);
+    body.set('password', password);
+
+    this.http.post(this.loginUrl, body).map(...);
+   */
+
+  login(user: Account): void {
+    console.log(user);
+    this.oauth.login(user.username, user.password);
+    this.getAllUser();
+  }
+
   getAllUser(): void {
     this.error = "";
-    const headers = new HttpHeaders()
-      .set('Authorization', 'Basic ' + btoa("test:test"));
-    this.http.get<Account[]>("http://localhost:8080/account", {
-      headers: headers
-    }).subscribe(bla => {
+    this.oauth.get<Account[]>("/account").subscribe(bla => {
       this.users = bla;
-    })
+    });
   }
 
   addUser(user: Account): void {
-    this.http.post("http://localhost:8080/account", user).subscribe(bla => {
+    this.oauth.post("/account", user).subscribe(bla => {
       this.onResult(bla);
-    })
+    });
   }
 
   editUser(current: Account, show: boolean): void {
@@ -47,19 +59,19 @@ export class AppComponent implements OnInit {
   }
 
   putUser(currentUser: String, user: Account): void {
-    this.http.put("http://localhost:8080/account/" + currentUser, user).subscribe(bla => {
+    this.oauth.put("/account/" + currentUser, user).subscribe(bla => {
       this.onResult(bla);
-    })
+    });
   }
 
   deleteUser(currentUser: String): void {
-    this.http.delete("http://localhost:8080/account/" + currentUser).subscribe(bla => {
+    this.oauth.remove("/account/" + currentUser).subscribe(bla => {
       this.onResult(bla);
-    })
+    });
   }
 
   deleteAllUser(): void {
-    this.http.delete("http://localhost:8080/account").subscribe(bla => {
+    this.oauth.remove("/account").subscribe(bla => {
       this.onResult(bla);
     })
   }
