@@ -13,7 +13,7 @@ import tmp.AccountSingleton;
  */
 @EnableAutoConfiguration(exclude = {EmbeddedMongoAutoConfiguration.class,
         MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
-@ComponentScan(basePackages = {"configuration", "controller"})
+@ComponentScan(basePackages = {"configuration", "controller", "oauth"})
 public class Main {
     public static void main(String[] args) throws Exception {
         SpringApplication.run(Main.class, args);

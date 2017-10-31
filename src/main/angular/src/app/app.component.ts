@@ -36,22 +36,23 @@ export class AppComponent implements OnInit {
    */
 
   login(user: Account): void {
-    console.log(user);
-    this.oauth.login(user.username, user.password);
-    this.getAllUser();
+    this.oauth.login(user.username, user.password).subscribe(bla => {
+      this.oauth.setToken(bla);
+      this.getAllUser();
+    }, error => this.oauth.error(error));
   }
 
   getAllUser(): void {
     this.error = "";
     this.oauth.get<Account[]>("/account").subscribe(bla => {
       this.users = bla;
-    });
+    }, error => this.oauth.error(error));
   }
 
   addUser(user: Account): void {
     this.oauth.post("/account", user).subscribe(bla => {
       this.onResult(bla);
-    });
+    }, error => this.oauth.error(error));
   }
 
   editUser(current: Account, show: boolean): void {
@@ -61,19 +62,19 @@ export class AppComponent implements OnInit {
   putUser(currentUser: String, user: Account): void {
     this.oauth.put("/account/" + currentUser, user).subscribe(bla => {
       this.onResult(bla);
-    });
+    }, error => this.oauth.error(error));
   }
 
   deleteUser(currentUser: String): void {
     this.oauth.remove("/account/" + currentUser).subscribe(bla => {
       this.onResult(bla);
-    });
+    }, error => this.oauth.error(error));
   }
 
   deleteAllUser(): void {
     this.oauth.remove("/account").subscribe(bla => {
       this.onResult(bla);
-    })
+    }, error => this.oauth.error(error))
   }
 
   onResult(bla: any): void {

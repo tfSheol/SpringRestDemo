@@ -1,6 +1,7 @@
 package oauth;
 
 import entity.Account;
+import entity.Token;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,19 +25,20 @@ public class SecurityManager implements HandlerInterceptor, OauthPath {
         Enumeration headerName = request.getHeaderNames();
         for (; headerName.hasMoreElements(); ) {
             String header = (String) headerName.nextElement();
-            System.err.println(header + " : " + request.getHeader(header));
             if (header.equals("authorization")) {
-                String base64Tmp = request.getHeader("authorization").split(" ")[1];
-                String[] base64DecodeTmp = new String(Base64.getDecoder().decode(base64Tmp)).split(":");
-                String username = base64DecodeTmp[0];
-                String password = base64DecodeTmp[1];
-                System.err.println(username);
-                System.err.println(password);
-                List<Account> accounts = AccountSingleton.getInstance().getAccounts();
-                for (Account account : accounts) {
-                    if (account.getUsername().equals(username)
-                            && account.getPassword().equals(password)) {
-                        return true;
+                String authorization_tmp[] = request.getHeader("authorization").split(" ");
+                if (authorization_tmp.length == 2) {
+                    String token_type = authorization_tmp[0];
+                    String token_value = authorization_tmp[1];
+                    if (token_type.equals("Bearer")) {
+                        List<Token> tokens = AccountSingleton.getInstance().getTokens();
+                        System.err.println(tokens.size());
+                        for (Token token : tokens) {
+                            System.err.println("db : " + token.getToken());
+                            if (token.getToken().equals(token_value)) {
+                                return true;
+                            }
+                        }
                     }
                 }
             }
@@ -66,7 +68,7 @@ public class SecurityManager implements HandlerInterceptor, OauthPath {
 
     @Override
     public void setOauthPath(ArrayList<String> loginPath) {
-        loginPath.add("/auth");
+        loginPath.add("/oauth/**");
     }
 
     @Override
