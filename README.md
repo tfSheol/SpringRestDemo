@@ -2,5 +2,7 @@
 ## Resource
 [ng2-localstorage](https://www.npmjs.com/package/ng2-localstorage)
 
-![1](./ress/1.jpg)
-![2](./ress/2.jpg)
+## Run
+```
+    mvn generate-resources spring-boot:run
+```
