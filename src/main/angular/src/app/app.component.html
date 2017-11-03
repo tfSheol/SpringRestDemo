@@ -3,30 +3,32 @@
     Welcome to {{title}}!
   </h1>
   <h2>{{this.error}}</h2>
-  <button (click)="deleteAllUser()">delete all users</button>
-  <div *ngFor='let user of users'>
-    {{user.username}}<br/>
-    {{user.email}}
-    <div *ngIf="user.edit">
-      <button (click)="editUser(user, false)">close</button>
-      <form #data="ngForm" (ngSubmit)="putUser(user.username, data.value)">
-        <input type="text" [ngModel]="user.username" placeholder="username" name="username" ngModel>
-        <input type="password" [ngModel]="user.password" placeholder="password" name="password" ngModel>
-        <input type="text" [ngModel]="user.email" placeholder="email" name="email" ngModel>
+  <div *ngIf="oauth.isConnected()">
+    <button (click)="deleteAllUser()">delete all users</button>
+    <div *ngFor='let user of users'>
+      {{user.username}}<br/>
+      {{user.email}}
+      <div *ngIf="user.edit">
+        <button (click)="editUser(user, false)">close</button>
+        <form #data="ngForm" (ngSubmit)="putUser(user.username, data.value)">
+          <input type="text" [ngModel]="user.username" placeholder="username" name="username" ngModel>
+          <input type="password" [ngModel]="user.password" placeholder="password" name="password" ngModel>
+          <input type="text" [ngModel]="user.email" placeholder="email" name="email" ngModel>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+      <button *ngIf="!user.edit" (click)="editUser(user, true)">edit</button>
+      <button *ngIf="!user.edit" (click)="deleteUser(user.username)">delete</button>
+    </div>
+    <br/>
+    <div>
+      <form #data="ngForm" (ngSubmit)="addUser(data.value)">
+        <input type="text" placeholder="username" name="username" ngModel>
+        <input type="password" placeholder="password" name="password" ngModel>
+        <input type="text" placeholder="email" name="email" ngModel>
         <button type="submit">Submit</button>
       </form>
     </div>
-    <button *ngIf="!user.edit" (click)="editUser(user, true)">edit</button>
-    <button *ngIf="!user.edit" (click)="deleteUser(user.username)">delete</button>
-  </div>
-  <br/>
-  <div>
-    <form #data="ngForm" (ngSubmit)="addUser(data.value)">
-      <input type="text" placeholder="username" name="username" ngModel>
-      <input type="password" placeholder="password" name="password" ngModel>
-      <input type="text" placeholder="email" name="email" ngModel>
-      <button type="submit">Submit</button>
-    </form>
   </div>
   <br/><br/>
   <div>
@@ -35,7 +37,7 @@
       <input type="password" placeholder="password" name="password" ngModel>
       <button type="submit">Login</button>
     </form>
-    <button *ngIf="oauth.isConnected()" (click)="oauth.logout()">Logout : {{oauth.getUsername()}}</button>
+    <button *ngIf="oauth.isConnected()" (click)="logout()">Logout : {{oauth.getUsername()}}</button>
   </div>
 </div>
 

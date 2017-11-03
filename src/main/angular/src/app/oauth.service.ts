@@ -8,20 +8,16 @@ class Token {
   token_type: String = "";
   username: String = "";
   ttl: number = 0;
-  connected: boolean = false;
+  connected: Boolean = false;
 }
 
 @Injectable()
 export class OauthService {
-  private url: String = "http://localhost:8080";
-  @LocalStorage() private token: Token;
+  private url: String = "http://localhost:8080/api";
+  @LocalStorage() private token: Token = new Token();
   private headers: HttpHeaders;
 
   constructor(private http: HttpClient) {
-    if (this.token == null) {
-      this.token = new Token();
-    }
-    console.log(this.token.connected);
     this.initHeader();
   }
 
@@ -38,7 +34,7 @@ export class OauthService {
   }
 
   public setToken(token: Token): void {
-    this.token = new Token();
+    //this.token = new Token();
     this.token = token;
     this.initHeader();
   }
@@ -51,7 +47,7 @@ export class OauthService {
     return this.token.username;
   }
 
-  public isConnected(): boolean {
+  public isConnected(): Boolean {
     return this.token.connected;
   }
 

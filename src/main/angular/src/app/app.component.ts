@@ -43,6 +43,11 @@ export class AppComponent implements OnInit {
     }, error => this.oauth.error(error));
   }
 
+  logout(): void {
+    this.oauth.logout();
+    this.users = [];
+  }
+
   getAllUser(): void {
     this.error = "";
     this.oauth.get<Account[]>("/account").subscribe(bla => {

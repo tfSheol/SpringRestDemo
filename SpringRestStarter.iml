@@ -6,6 +6,8 @@
         <fileset id="fileset" name="MyConfiguration" removed="false">
           <file>file://$MODULE_DIR$/src/main/java/MyConfiguration.java</file>
           <file>file://$MODULE_DIR$/src/main/java/configuration/WebConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/app/Api.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/app/Web.java</file>
         </fileset>
       </configuration>
     </facet>
@@ -68,5 +70,6 @@
     <orderEntry type="library" name="Maven: org.mongodb:mongodb-driver-core:3.5.0" level="project" />
     <orderEntry type="library" name="Maven: org.json:json:20170516" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.2" level="project" />
+    <orderEntry type="library" name="Maven: org.alcibiade:asciiart-core:1.1.0" level="project" />
   </component>
 </module>

@@ -1,16 +1,14 @@
 package oauth;
 
-import entity.Account;
 import entity.Token;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-import tmp.AccountSingleton;
+import tmp.DataSingleton;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -31,10 +29,8 @@ public class SecurityManager implements HandlerInterceptor, OauthPath {
                     String token_type = authorization_tmp[0];
                     String token_value = authorization_tmp[1];
                     if (token_type.equals("Bearer")) {
-                        List<Token> tokens = AccountSingleton.getInstance().getTokens();
-                        System.err.println(tokens.size());
+                        List<Token> tokens = DataSingleton.getInstance().getTokens();
                         for (Token token : tokens) {
-                            System.err.println("db : " + token.getToken());
                             if (token.getToken().equals(token_value)) {
                                 return true;
                             }

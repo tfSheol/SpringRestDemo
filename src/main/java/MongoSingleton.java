@@ -1,3 +1,5 @@
+package api;
+
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
 

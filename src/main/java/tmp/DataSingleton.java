@@ -10,16 +10,16 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author sheol on 10/30/17 at 4:06 PM
  * @project SpringRestDemo
  */
-public class AccountSingleton {
-    private static AccountSingleton instance = new AccountSingleton();
+public class DataSingleton {
+    private static DataSingleton instance = new DataSingleton();
     private List<Account> accounts = new CopyOnWriteArrayList<>();
     private List<Token> tokens = new CopyOnWriteArrayList<>();
 
-    private AccountSingleton() {
+    private DataSingleton() {
 
     }
 
-    public static AccountSingleton getInstance() {
+    public static DataSingleton getInstance() {
         return instance;
     }
 
