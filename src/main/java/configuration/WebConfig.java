@@ -20,7 +20,7 @@ import java.util.Map;
 public class WebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-        Map<String, String> parameterMap = new HashMap<String, String>();
+        Map<String, String> parameterMap = new HashMap<>();
         parameterMap.put("charset", "utf-8");
         configurer.defaultContentType(new MediaType(MediaType.APPLICATION_JSON, parameterMap));
     }
@@ -33,9 +33,9 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         SecurityManager securityManager = getSecurityManager();
-        ArrayList<String> protectedResource = new ArrayList<String>();
-        ArrayList<String> excludedResource = new ArrayList<String>();
-        ArrayList<String> oauthPath = new ArrayList<String>();
+        ArrayList<String> protectedResource = new ArrayList<>();
+        ArrayList<String> excludedResource = new ArrayList<>();
+        ArrayList<String> oauthPath = new ArrayList<>();
         securityManager.protectResource(protectedResource);
         securityManager.excludeResource(excludedResource);
         securityManager.setOauthPath(oauthPath);

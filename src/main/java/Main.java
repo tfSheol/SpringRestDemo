@@ -1,6 +1,8 @@
 import app.Api;
 import app.Servlet;
 import app.Web;
+import entity.Account;
+import io.ebean.EbeanServer;
 import org.alcibiade.asciiart.coord.TextBoxSize;
 import org.alcibiade.asciiart.image.rasterize.ShapeRasterizer;
 import org.alcibiade.asciiart.raster.ExtensibleCharacterRaster;
@@ -18,6 +20,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import tmp.DataSingleton;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

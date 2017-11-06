@@ -1,5 +1,7 @@
 package tmp;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import entity.Account;
 import entity.Token;
 
@@ -16,7 +18,6 @@ public class DataSingleton {
     private List<Token> tokens = new CopyOnWriteArrayList<>();
 
     private DataSingleton() {
-
     }
 
     public static DataSingleton getInstance() {
@@ -29,5 +30,11 @@ public class DataSingleton {
 
     public List<Token> getTokens() {
         return tokens;
+    }
+
+    public static Gson gson() {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.excludeFieldsWithoutExposeAnnotation();
+        return gsonBuilder.create();
     }
 }

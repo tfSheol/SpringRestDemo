@@ -17,9 +17,6 @@ import java.util.List;
 public class AccountController {
     private List<Account> accounts = DataSingleton.getInstance().getAccounts();
 
-    public AccountController() {
-    }
-
     private String myResponse(String msg) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("msg", msg);
@@ -34,7 +31,7 @@ public class AccountController {
 
     @GetMapping
     public String getAccounts() {
-        return new Gson().toJson(accounts);
+        return DataSingleton.gson().toJson(accounts);
     }
 
     @PostMapping

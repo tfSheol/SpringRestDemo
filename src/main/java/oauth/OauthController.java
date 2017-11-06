@@ -1,8 +1,11 @@
 package oauth;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import entity.Account;
 import entity.Token;
+import io.ebean.Ebean;
+import io.ebean.EbeanServer;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -37,8 +40,11 @@ public class OauthController {
                     Token token = new Token();
                     token.setToken(UUID.randomUUID().toString());
                     token.setUsername(account.getUsername());
+                    token.setTtl(3600);
                     DataSingleton.getInstance().getTokens().add(token);
-                    return new Gson().toJson(token);
+                    //EbeanServer ebean = Ebean.getDefaultServer();
+                    Ebean.save(token);
+                    return DataSingleton.gson().toJson(token);
                 }
             }
         }

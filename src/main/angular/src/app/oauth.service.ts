@@ -7,7 +7,7 @@ class Token {
   token: String = "";
   token_type: String = "";
   username: String = "";
-  ttl: number = 0;
+  ttl: Number = 0;
   connected: Boolean = false;
 }
 
@@ -34,7 +34,6 @@ export class OauthService {
   }
 
   public setToken(token: Token): void {
-    //this.token = new Token();
     this.token = token;
     this.initHeader();
   }
