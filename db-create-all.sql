@@ -8,7 +8,7 @@ create table account (
 
 create table token (
   token                         varchar(255),
-  username                      varchar(255),
+  user_id                       bigint,
   token_type                    varchar(255),
   ttl                           integer not null
 );

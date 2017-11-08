@@ -1,6 +1,7 @@
 package oauth;
 
 import entity.Token;
+import io.ebean.Ebean;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -29,7 +30,8 @@ public class SecurityManager implements HandlerInterceptor, OauthPath {
                     String token_type = authorization_tmp[0];
                     String token_value = authorization_tmp[1];
                     if (token_type.equals("Bearer")) {
-                        List<Token> tokens = DataSingleton.getInstance().getTokens();
+                        List<Token> tokens = Ebean.createQuery(Token.class).findList();
+                        //List<Token> tokens = DataSingleton.getInstance().getTokens();
                         for (Token token : tokens) {
                             if (token.getToken().equals(token_value)) {
                                 return true;

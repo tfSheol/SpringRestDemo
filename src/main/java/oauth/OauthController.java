@@ -33,16 +33,16 @@ public class OauthController {
         if (base64DecodeTmp.length == 2) {
             String username = base64DecodeTmp[0];
             String password = base64DecodeTmp[1];
-            List<Account> accounts = DataSingleton.getInstance().getAccounts();
+            List<Account> accounts = Ebean.createQuery(Account.class).findList();
+            //List<Account> accounts = DataSingleton.getInstance().getAccounts();
             for (Account account : accounts) {
                 if (account.getUsername().equals(username)
                         && account.getPassword().equals(password)) {
                     Token token = new Token();
                     token.setToken(UUID.randomUUID().toString());
-                    token.setUsername(account.getUsername());
+                    token.setUser_id(account.getId());
                     token.setTtl(3600);
-                    DataSingleton.getInstance().getTokens().add(token);
-                    //EbeanServer ebean = Ebean.getDefaultServer();
+                    //DataSingleton.getInstance().getTokens().add(token);
                     Ebean.save(token);
                     return DataSingleton.gson().toJson(token);
                 }

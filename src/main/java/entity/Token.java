@@ -15,7 +15,7 @@ public class Token {
     @Expose
     private String token;
     @Expose
-    private String username;
+    private Long user_id;
     @Expose
     private String token_type = "Bearer";
     @Expose
@@ -25,8 +25,8 @@ public class Token {
 
     }
 
-    public String getUsername() {
-        return username;
+    public Long getUser_id() {
+        return user_id;
     }
 
     public int getTtl() {
@@ -41,10 +41,6 @@ public class Token {
         return token_type;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public void setToken(String token) {
         this.token = token;
     }
@@ -55,5 +51,9 @@ public class Token {
 
     public void setToken_type(String token_type) {
         this.token_type = token_type;
+    }
+
+    public void setUser_id(Long user_id) {
+        this.user_id = user_id;
     }
 }
