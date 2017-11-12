@@ -1,13 +1,11 @@
 package controller;
 
-import com.google.gson.Gson;
 import entity.Account;
 import io.ebean.Ebean;
+import oauth.OauthAccount;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 import tmp.DataSingleton;
-
-import java.util.List;
 
 /**
  * @author sheol on 9/26/17 at 4:47 PM
@@ -15,6 +13,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/account")
+@SessionAttributes("oauth_account")
 public class AccountController {
     private static final int NONE = 0;
     private static final int USERNAME = 1;
@@ -98,14 +97,18 @@ public class AccountController {
     }
 
     @DeleteMapping("/{username}")
-    public String deleteAccount(@PathVariable String username) {
-        Account account = Ebean.createQuery(Account.class).where()
-                .eq("username", username).findOne();
-        if (account != null) {
-            Ebean.delete(account);
-            return myResponse("delete " + username);
+    public String deleteAccount(@ModelAttribute("oauth_account") OauthAccount oauthAccount,
+                                @PathVariable String username) {
+        if (!oauthAccount.getAccountUsername().equals(username)) {
+            Account account = Ebean.createQuery(Account.class).where()
+                    .eq("username", username).findOne();
+            if (account != null) {
+                Ebean.delete(account);
+                return myResponse("delete " + username);
+            }
+            return myError("username not found");
         }
-        return myError("username not found");
+        return myError("is you !");
     }
 
     @DeleteMapping

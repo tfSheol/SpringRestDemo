@@ -1,5 +1,6 @@
 package oauth;
 
+import entity.Account;
 import entity.Token;
 import io.ebean.Ebean;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import tmp.DataSingleton;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -34,6 +36,7 @@ public class SecurityManager implements HandlerInterceptor, OauthPath {
                         //List<Token> tokens = DataSingleton.getInstance().getTokens();
                         for (Token token : tokens) {
                             if (token.getToken().equals(token_value)) {
+                                addToModelUserDetails(token.getUser_id(), token, request.getSession());
                                 return true;
                             }
                         }
@@ -46,6 +49,19 @@ public class SecurityManager implements HandlerInterceptor, OauthPath {
         return false;
 
     }
+
+    private void addToModelUserDetails(Long userId, Token token, HttpSession session) {
+        Account account = Ebean.createQuery(Account.class).where()
+                .eq("id", userId).findOne();
+        if (account != null) {
+            session.setAttribute("oauth_account",
+                    new OauthAccount(account.getId(),
+                            account.getUsername(),
+                            token.getToken(),
+                            account.getEmail()));
+        }
+    }
+
 
     @Override
     public void postHandle(HttpServletRequest request,
